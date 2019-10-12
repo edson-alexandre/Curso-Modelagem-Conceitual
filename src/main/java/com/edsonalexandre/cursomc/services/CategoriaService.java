@@ -13,7 +13,7 @@ import com.edsonalexandre.cursomc.services.exceptions.ObjectNotFoundExcepition;
 public class CategoriaService {
 
 	@Autowired
-	CategoriaRepository repo;
+	private CategoriaRepository repo;
 	
 	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
