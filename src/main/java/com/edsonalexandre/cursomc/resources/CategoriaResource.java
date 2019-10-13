@@ -1,11 +1,16 @@
 package com.edsonalexandre.cursomc.resources;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edsonalexandre.cursomc.domain.Categoria;
 import com.edsonalexandre.cursomc.services.CategoriaService;
@@ -21,5 +26,12 @@ public class CategoriaResource {
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Categoria> listar(@PathVariable Integer id) {			
 		return ResponseEntity.ok().body(service.buscar(id));
+	}
+	
+	@PostMapping
+	public ResponseEntity<Void> inserir(@RequestBody Categoria categoria) {
+		categoria = service.insert(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 }
