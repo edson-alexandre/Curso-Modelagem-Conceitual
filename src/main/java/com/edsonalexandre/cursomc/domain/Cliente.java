@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.edsonalexandre.cursomc.domain.enuns.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente {
@@ -33,6 +34,7 @@ public class Cliente {
 	@CollectionTable (name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany (mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
