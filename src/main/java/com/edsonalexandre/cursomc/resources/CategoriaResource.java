@@ -37,6 +37,15 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(service.find(id));
 	}
 	
+	@PostMapping
+	public ResponseEntity<Void> inserir(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+		Categoria categoria = service.fromDTO(categoriaDTO);
+		categoria = service.insert(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll(){
 		List<Categoria> list = service.findAll();
@@ -57,14 +66,6 @@ public class CategoriaResource {
 		Page<Categoria> pageable = service.findPage(page, linesPerPage, direction, orderBy);
 		Page<CategoriaDTO> pageableDTO = pageable.map(cat -> new CategoriaDTO(cat));
 		return ResponseEntity.ok().body(pageableDTO);
-	}
-	
-	@PostMapping
-	public ResponseEntity<Void> inserir(@Valid @RequestBody CategoriaDTO categoriaDTO) {
-		Categoria categoria = service.fromDTO(categoriaDTO);
-		categoria = service.insert(categoria);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
-		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value="/{id}")

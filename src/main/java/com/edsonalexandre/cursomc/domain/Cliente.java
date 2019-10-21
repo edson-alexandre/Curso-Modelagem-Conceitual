@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,11 +25,13 @@ public class Cliente {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique = true)
 	private String email;
 	private String cpfOUCnpj;
 	private Integer tipo;
 	
-	@OneToMany (mappedBy = "cliente")	
+	@OneToMany (mappedBy = "cliente",cascade = CascadeType.ALL)	
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
@@ -50,7 +54,7 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOUCnpj = cpfOUCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 
