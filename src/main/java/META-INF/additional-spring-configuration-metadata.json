@@ -8,5 +8,15 @@
     "name": "default.reciptent",
     "type": "java.lang.String",
     "description": "Destinatário de e-mail padrão"
+  },
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "Segredo do token JWT"
+  },
+  {
+    "name": "jwt.expiration",
+    "type": "java.lang.String",
+    "description": "Tempo de expiração do token JWT"
   }
 ]}
