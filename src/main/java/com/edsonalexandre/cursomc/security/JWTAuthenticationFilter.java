@@ -1,4 +1,4 @@
-package com.edsonalexandre.cursomc.config;
+package com.edsonalexandre.cursomc.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,8 +17,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.edsonalexandre.cursomc.dto.CredenciaisDTO;
-import com.edsonalexandre.cursomc.security.JWTUtil;
-import com.edsonalexandre.cursomc.security.UserSS;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
