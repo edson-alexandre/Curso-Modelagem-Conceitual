@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,8 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {			
 		return ResponseEntity.ok().body(service.find(id));
 	}
-	
+		
+	@PostAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> inserir(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 		Categoria categoria = service.fromDTO(categoriaDTO);
@@ -68,6 +70,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(pageableDTO);
 	}
 	
+	@PostAuthorize("hasRole('ADMIN')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id) {
 		Categoria categoria = service.fromDTO(categoriaDTO);
@@ -76,6 +79,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PostAuthorize("hasRole('ADMIN')")
 	@DeleteMapping (value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		find(id);
