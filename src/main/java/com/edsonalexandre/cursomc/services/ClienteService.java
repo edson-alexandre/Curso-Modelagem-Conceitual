@@ -52,6 +52,29 @@ public class ClienteService {
 				"Objeto não encontrado. Id: " + id + " Tipo: " + Cliente.class.getName()));
 	}
 
+
+	public List<Cliente> findAll() {
+		return repository.findAll();
+	}
+	
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		
+		if(user == null || !user.hasHole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Cliente obj = repository.findByEmail(email);
+		
+		if(obj==null) {
+			throw new ObjectNotFoundExcepition(
+					"Objeto não encontrado! Id: "+user.getId() + ", Tipo: "+Cliente.class.getName()
+					);
+		}
+		
+		return obj;
+	}
+
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
 		updateData(newObj, obj);
@@ -66,9 +89,6 @@ public class ClienteService {
 		}
 	}
 
-	public List<Cliente> findAll() {
-		return repository.findAll();
-	}
 
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage,String direction, String orderBy){
 		PageRequest pageable = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
